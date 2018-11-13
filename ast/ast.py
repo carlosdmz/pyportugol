@@ -8,6 +8,13 @@ class Numero(object):
         return int(self.value)
 
 
+class Nulo(object):
+
+    def eval(self):
+
+        return None
+
+
 class String(object):
 
     def __init__(self, value):
@@ -36,6 +43,23 @@ class Identificador(object):
     def eval(self):
 
         return int(self.value)
+
+
+class ForLoop(object):
+
+    def __init__(self, base, limit, step, expr):
+        self.base = base
+        self.limit = limit
+        self.step = step
+        self.expr = expr
+
+    def eval(self):
+        self.step = 1 if self.step == 0 else self.step
+
+        for i in range(
+                self.base.eval(), self.limit.eval(), self.step.eval()
+        ):
+            self.expr.eval()
 
 
 class OpBinario(object):
@@ -71,6 +95,34 @@ class Div(OpBinario):
     def eval(self):
 
         return self.left.eval() / self.right.eval()
+
+
+class Less(OpBinario):
+
+    def eval(self):
+
+        return self.left.eval() < self.right.eval()
+
+
+class More(OpBinario):
+
+    def eval(self):
+
+        return self.left.eval() > self.right.eval()
+
+
+class LessEqual(OpBinario):
+
+    def eval(self):
+
+        return self.left.eval() <= self.right.eval()
+
+
+class MoreEqual(OpBinario):
+
+    def eval(self):
+
+        return self.left.eval() >= self.right.eval()
 
 
 class Atribuicao(OpBinario):

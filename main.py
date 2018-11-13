@@ -6,13 +6,10 @@ text_input = """
     inteiro:x;
     inteiro:y;
 
-    imprima("Digite o valor de X...");
     leia(x);
-    imprima("Digite o valor de Y...");
-    leia(y);
 
-    imprima(x);
-    imprima(y);
+    leia(y);
+    para x ate y passo 1 imprima(x); fim_para
 """
 
 lexer = Lexer().get_lexer()
