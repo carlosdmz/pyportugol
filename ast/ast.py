@@ -4,14 +4,12 @@ class Numero(object):
         self.value = value
 
     def eval(self):
-
         return int(self.value)
 
 
 class Nulo(object):
 
     def eval(self):
-
         return None
 
 
@@ -41,7 +39,6 @@ class Identificador(object):
         self.tipo = tipo
 
     def eval(self):
-
         return int(self.value)
 
 
@@ -72,49 +69,42 @@ class OpBinario(object):
 class Add(OpBinario):
 
     def eval(self):
-
         return self.left.eval() + self.right.eval()
 
 
 class Sub(OpBinario):
 
     def eval(self):
-
         return self.left.eval() - self.right.eval()
 
 
 class Mult(OpBinario):
 
     def eval(self):
-
         return self.left.eval() * self.right.eval()
 
 
 class Div(OpBinario):
 
     def eval(self):
-
         return self.left.eval() / self.right.eval()
 
 
 class Less(OpBinario):
 
     def eval(self):
-
         return self.left.eval() < self.right.eval()
 
 
 class More(OpBinario):
 
     def eval(self):
-
         return self.left.eval() > self.right.eval()
 
 
 class LessEqual(OpBinario):
 
     def eval(self):
-
         return self.left.eval() <= self.right.eval()
 
 
@@ -129,7 +119,6 @@ class Atribuicao(OpBinario):
 
     def eval(self):
         self.right.tipo = self.left.eval()
-
         return self.right
 
 
@@ -149,5 +138,4 @@ class Leia(object):
 
     def eval(self):
         new_value = int(input())
-
         return self.ident, new_value
