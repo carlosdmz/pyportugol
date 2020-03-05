@@ -111,7 +111,6 @@ class LessEqual(OpBinario):
 class MoreEqual(OpBinario):
 
     def eval(self):
-
         return self.left.eval() >= self.right.eval()
 
 
