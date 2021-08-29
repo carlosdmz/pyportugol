@@ -1,5 +1,7 @@
 class Numero(object):
-
+    """
+        Number type abstraction.
+    """
     def __init__(self, value):
         self.value = value
 
@@ -8,13 +10,17 @@ class Numero(object):
 
 
 class Nulo(object):
-
+    """
+        Null type abstraction.
+    """
     def eval(self):
         return None
 
 
 class String(object):
-
+    """
+        String type abstraction.
+    """
     def __init__(self, value):
         self.value = value
 
@@ -23,7 +29,9 @@ class String(object):
 
 
 class Tipo(object):
-
+    """
+        A type abstraction.
+    """
     def __init__(self, value):
         self.value = value
 
@@ -32,7 +40,9 @@ class Tipo(object):
 
 
 class Identificador(object):
-
+    """
+        A identifier abstraction.
+    """
     def __init__(self, nome, tipo, value=0):
         self.nome = nome
         self.value = value
@@ -43,7 +53,9 @@ class Identificador(object):
 
 
 class ForLoop(object):
-
+    """
+        For loop abstraction.
+    """
     def __init__(self, base, limit, step, expr):
         self.base = base
         self.limit = limit
@@ -52,7 +64,6 @@ class ForLoop(object):
 
     def eval(self):
         self.step = 1 if self.step == 0 else self.step
-
         for i in range(
                 self.base.eval(), self.limit.eval(), self.step.eval()
         ):
@@ -60,56 +71,74 @@ class ForLoop(object):
 
 
 class OpBinario(object):
-
+    """
+        Base abstraction for statements that requires 2 other objects.
+    """
     def __init__(self, left, right):
         self.left = left
         self.right = right
 
 
 class Add(OpBinario):
-
+    """
+        Addition evaluation returns a new number to be assigned on expr.
+    """
     def eval(self):
         return self.left.eval() + self.right.eval()
 
 
 class Sub(OpBinario):
-
+    """
+        Subtraction evaluation returns a new number to be assigned on expr.
+    """
     def eval(self):
         return self.left.eval() - self.right.eval()
 
 
 class Mult(OpBinario):
-
+    """
+        Subtraction evaluation returns a new number to be assigned on expr.
+    """
     def eval(self):
         return self.left.eval() * self.right.eval()
 
 
 class Div(OpBinario):
-
+    """
+        Subtraction evaluation returns a new number to be assigned on expr.
+    """
     def eval(self):
         return self.left.eval() / self.right.eval()
 
 
 class Less(OpBinario):
-
+    """
+        Less bool evaluation returns a boolean result of the expression.
+    """
     def eval(self):
         return self.left.eval() < self.right.eval()
 
 
 class More(OpBinario):
-
+    """
+        Less bool evaluation returns a boolean result of the expression.
+    """
     def eval(self):
         return self.left.eval() > self.right.eval()
 
 
 class LessEqual(OpBinario):
-
+    """
+        Less-equals bool evaluation returns a boolean result of the expression.
+    """
     def eval(self):
         return self.left.eval() <= self.right.eval()
 
 
 class MoreEqual(OpBinario):
-
+    """
+        Less-equals bool evaluation returns a boolean result of the expression.
+    """
     def eval(self):
         return self.left.eval() >= self.right.eval()
 

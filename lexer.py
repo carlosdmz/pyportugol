@@ -1,10 +1,13 @@
 from rply import LexerGenerator
 
-from ebnf.ebnf import EBNF
+from ebnf import EBNF
 
 
 class Lexer(object):
-
+    """
+        Adds tokens defined in EBNF to be built into the lexer.
+        Lexer definitions matches EBNF definition.
+    """
     def __init__(self):
         self.lexer = LexerGenerator()
 
@@ -52,5 +55,4 @@ class Lexer(object):
 
     def get_lexer(self):
         self._add_tokens()
-
         return self.lexer.build()

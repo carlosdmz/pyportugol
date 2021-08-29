@@ -1,6 +1,6 @@
 from rply import ParserGenerator
 
-from ast.ast import (
+from ast import (
     Numero,
     Nulo,
     String,
@@ -21,10 +21,11 @@ from ast.ast import (
 )
 
 class Parser():
-
+    """
+        Defines parsing rules for expressions and statements.
+    """
     def __init__(self):
-        self.pg = ParserGenerator(
-            [
+        self.pg = ParserGenerator([
                 'NUMBER',
                 'STRING',
                 'IDENT',
@@ -50,24 +51,13 @@ class Parser():
                 'LESS',
                 'MORE',
                 'LESS_EQ',
-                'MORE_EQ',
-            ],
-            precedence= [
-                ('left', ['ADD', 'SUB']),
-                ('left', ['MUL', 'DIV'])
-            ]
-        )
+                'MORE_EQ',],
+            precedence=[('left', ['ADD', 'SUB']), ('left', ['MUL', 'DIV'])])
         self.vars = {}
-        self.flags = {
-            "for": False,
-            "while": False,
-            "if": False
-        }
 
     def parse(self):
         @self.pg.production("main : expression")
         def main(p):
-
             return p[0]
 
         @self.pg.production(
@@ -77,7 +67,6 @@ class Parser():
             if isinstance(p[2], Identificador):
                 if p[2].nome in self.vars.keys():
                     return Imprime(self.vars[p[2].nome])
-
             return Imprime(p[2])
 
         @self.pg.production(
@@ -86,7 +75,6 @@ class Parser():
         def read_input(p):
             new_ident, new_value = Leia(p[2]).eval()
             self.vars[new_ident.nome].value = new_value
-
             return new_ident
 
         @self.pg.production(
@@ -107,14 +95,11 @@ class Parser():
             if isinstance(p[1], Identificador):
                 if p[1].nome in self.vars.keys():
                     base = self.vars[p[1].nome]
-
             if isinstance(p[3], Identificador):
                 if p[3].nome in self.vars.keys():
                     limite = self.vars[p[3].nome]
-
             if isinstance(base, Identificador) and isinstance(limite, Identificador):
                 return ForLoop(base, limite, p[5], p[6])
-
             return ForLoop(p[1], p[3], p[5], p[6])
 
         @self.pg.production(
@@ -123,12 +108,9 @@ class Parser():
         def expression_attr(p):
             type_ident = p[0]
             ident = p[2]
-
             atrib = Atribuicao(type_ident, ident)
             ident_to_be_stored = atrib.right.tipo.value
-
             self.vars[ident_to_be_stored] = atrib.right
-
             return atrib
 
         @self.pg.production('expression : expression LESS expression')
@@ -139,15 +121,12 @@ class Parser():
             left = p[0]
             right = p[2]
             operator = p[1]
-
             if isinstance(p[0], Identificador):
                 if p[0].nome in self.vars.keys():
                     left = self.vars[p[0].nome]
-
             if isinstance(p[2], Identificador):
                 if p[2].nome in self.vars.keys():
                     right = self.vars[p[2].nome]
-
             if operator.gettokentype() == 'LESS':
                 return Less(left, right)
             elif operator.gettokentype() == 'MORE':
@@ -186,22 +165,18 @@ class Parser():
 
         @self.pg.production('expression : IDENT')
         def identifier(p):
-
             return Identificador(p[0].value, p[0])
 
         @self.pg.production('expression : NUMBER')
         def number(p):
-
             return Numero(p[0].value)
 
         @self.pg.production('expression : STRING')
         def string(p):
-
             return String(p[0].value)
 
         @self.pg.production('expression : INT')
         def tipo(p):
-
             return Tipo(p[0].value)
 
         @self.pg.error
@@ -209,5 +184,4 @@ class Parser():
             raise ValueError(token)
 
     def get_parser(self):
-
         return self.pg.build()
